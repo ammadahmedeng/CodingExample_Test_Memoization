@@ -1,7 +1,11 @@
+import logging
+
 import memoization
 import pytest
 import os
 import sys
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 # If the function is called then the test result are logged in (logMemoization) folder;
@@ -11,11 +15,12 @@ def log_Memoization_Test_Results(logFileName):
     sys.stdout = logTestResults
 
 
+# Memoized test (failed or passed) result logged
+# log_Memoization_Test_Results("logStatementTC")
 # memoization class for controlling memoize Test Plan (TP)
-@pytest.mark.describe('memoization')
+@pytest.mark.describe('memoization-statement-coverage')
 class Test_memoization:
-    # Memoized test (failed or passed) result logged
-    log_Memoization_Test_Results("logPassedTC")
+    log = logging.getLogger('test_1')
 
     ###############################################################################
     # Test Suite1 (TS1) : Statement Coverage
