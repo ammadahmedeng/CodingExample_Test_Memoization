@@ -1,2 +1,2 @@
-# def memoize(varMemoizeValue, varResolver, intTimeout):
-#    return memoizeValue
+def memoize(varMemoizeValue, varResolver, intTimeout):
+    return varMemoizeValue

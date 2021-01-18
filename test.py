@@ -4,7 +4,7 @@ import os
 import sys
 
 
-# If the function is called then the test result are logged in (memoizationLog) folder;
+# If the function is called then the test result are logged in (logMemoization) folder;
 # instead of showing on console
 def log_Memoization_Test_Results(logFileName):
     logTestResults = open(os.path.join(os.getcwd(), "logMemoization", logFileName + ".log"), "a")
@@ -15,11 +15,20 @@ def log_Memoization_Test_Results(logFileName):
 @pytest.mark.describe('memoization')
 class Test_memoization:
     # Memoized test (failed or passed) result logged
-    log_Memoization_Test_Results("logFailedTC")
+    log_Memoization_Test_Results("logPassedTC")
 
+    ###############################################################################
     # Test Suite1 (TS1) : Statement Coverage
+
+    # To ensure every statement in the test code is at least tested once.
+    # Doesn't need to do Branch Coverage here,
+    # as it will be automatically cover in Test Suite2,
+    # which is Path Coverage.
+
     # Test Cases* (TC*) : One test case = One statement coverage
-    @pytest.mark.it('Should failed in attempt of doing memoize due to missing function')
+    ###############################################################################
+
+    @pytest.mark.it('Should passed in attempt of doing memoize after implementing minimum function')
     def test_TS1_TC1(self):
         # Initial test with BDD/TDD -> Fail - Pass - Scenario
 
