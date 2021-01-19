@@ -1,5 +1,6 @@
 import os
 
+# Faking timeout for the expiration of memoized stored value
 import datetime
 from freezegun import freeze_time
 
@@ -11,21 +12,18 @@ import memoization
 # Postional Argument (memoizeValue) with lambda anonymous function
 varMemoizeValue = lambda memoizeValue: memoizeValue
 
-# memoization-statement-coverage class for controlling memoize Test Plan (TP)
-@pytest.mark.describe('memoization-statement-coverage')
-class Test_memoization_stat_cov:
+# memoization-branch-coverage class for controlling memoize Test Plan (TP)
+@pytest.mark.describe('memoization-branch-coverage')
+class Test_memoization_branch_cov:
     ###############################################################################
-    # Test Suite1 (TS1) : Statement Coverage
+    # Test Suite1 (TS1) : Branch Coverage
 
-    # To ensure maximum number of statements in the test code is at least tested once.
-    # Doesn't need to do Branch Coverage here,
-    # as it will be automatically cover in Test Suite2,
-    # which is Path Coverage.
+    # Reasons Documented in: Design_Rationale.pdf
 
-    # Test Cases* (TC*) : One test case = One statement coverage flow
+    # Test Cases* (TC*) : One test case = One Branch Coverage
 
     # The total test coverage for TS1 is:
-    # (Tested Lines / Total Lines) * 100 =
+    # (Tested Branch / Total Branch) * 100 =
     ###############################################################################
 
     # Function for memoize value
