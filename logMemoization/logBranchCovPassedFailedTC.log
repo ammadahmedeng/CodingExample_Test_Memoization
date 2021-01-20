@@ -1,0 +1,37 @@
+============================= test session starts =============================
+platform win32 -- Python 3.8.0, pytest-6.2.1, py-1.10.0, pluggy-0.13.1 -- C:\Users\ammad\Desktop\CodingExample_Test_Memoization\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\ammad\Desktop\CodingExample_Test_Memoization
+plugins: describe-it-0.1.0
+collecting ... collected 6 items
+
+test.py::Test_memoization_branch_cov::test_TS1_TC1[[ memoization-branch-coverage — Test Should Passed - Ensure to cover the branch when resolver is not None. It will cover branch of Line 26 (if), Line 20 (else), Line 55 (else) and Line 59 (if).Parameters: (1, 100, 1000) ]] PASSED
+test.py::Test_memoization_branch_cov::test_TS1_TC2[[ memoization-branch-coverage — Test Should Failed - Their is no expiry of old value, so it should failed. It will cover remaining branch coverage of Line 59 (if - False condition) as well as Line 59 Conditions (if-elif- (else)).Parameters: (2, 100, 1000) ]] FAILED
+test.py::Test_memoization_branch_cov::test_TS1_TC3[[ memoization-branch-coverage — Test Should Passed - Ensure to cover the branch when resolver is not None and memoize value timed out. Also pass tuples to cover branch coverage of function resolver().It will cover remaining branch of Line 18 (if), Line 66 (elif).Parameters: (2, (100, 101), 1000) ]] PASSED
+test.py::Test_memoization_branch_cov::test_TS1_TC4[[ memoization-branch-coverage — Test Should Passed - Ensure to cover the branch when resolver is None. It will cover remaining branch of Line 26 (if - False condition), Line 35 (if), Line 39 (if).Parameters: (11, None, 1000) ]] PASSED
+test.py::Test_memoization_branch_cov::test_TS1_TC5[[ memoization-branch-coverage — Test Should Passed - Although, their is no expiry of old value, but without resolver key,the value will just be added in the List. It will cover remaining branch of Line 39 (if - False condition) as well as Line 39 Conditions (if-elif- (else)).Parameters: (11, None, 1000) ]] PASSED
+test.py::Test_memoization_branch_cov::test_TS1_TC6[[ memoization-branch-coverage — Test Should Passed - Ensure to cover the branch when resolver is None and memoize value timed out.It will cover remaining branch of Line 46 (elif).Parameters: (11, None, 1000) ]] PASSED
+
+================================== FAILURES ===================================
+_ Test_memoization_branch_cov.test_TS1_TC2[[ memoization-branch-coverage — Test Should Failed - Their is no expiry of old value, so it should failed. It will cover remaining branch coverage of Line 59 (if - False condition) as well as Line 59 Conditions (if-elif- (else)).Parameters: (2, 100, 1000) ]] _
+
+self = <test.Test_memoization_branch_cov object at 0x0000022103216DF0>
+
+    @pytest.mark.it('Test Should Failed - Their is no expiry of old value, so it should failed. '
+                    'It will cover remaining branch coverage of Line 59 (if - False condition) '
+                    'as well as Line 59 Conditions (if-elif- (else)).'
+                    'Parameters: (2, 100, 1000)')
+    def test_TS1_TC2(self):
+        self.varReturnValue = 2
+    
+        # Assertion for checking new value, but it will returned old value
+        # thus failing the result
+>       assert memoization.memoize(varMemoizeValue(self.varReturnValue), 100, 1000) == 2
+E       assert 1 == 2
+E         +1
+E         -2
+
+test.py:51: AssertionError
+=========================== short test summary info ===========================
+FAILED test.py::Test_memoization_branch_cov::test_TS1_TC2[[ memoization-branch-coverage — Test Should Failed - Their is no expiry of old value, so it should failed. It will cover remaining branch coverage of Line 59 (if - False condition) as well as Line 59 Conditions (if-elif- (else)).Parameters: (2, 100, 1000) ]]
+========================= 1 failed, 5 passed in 0.17s =========================

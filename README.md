@@ -3,8 +3,8 @@
 The flow of the code is explained with the help of the comments 
 in each file which are memoization.py and test.py
 
-Loggin resuls contain the Failed and Passed initial test case.
-Furthemore, it consists the Branch Coverage Pass-Fail test cases for the code which finally stands
+Logging results contain the Failed and Passed initial test case.
+Furthemore, it consists the Branch Coverage Pass-Fail test cases for the code which finally stands.
 LoggingResults : /logMemoization/
 
 Unit Testing Framework

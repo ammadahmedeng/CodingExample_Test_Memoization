@@ -21,7 +21,7 @@ class Test_memoization_branch_cov:
 
     # Reasons Documented in: Design_Rationale.pdf
 
-    # Test Cases* (TC*) : One test case = One Branch Coverage
+    # Test Cases* (TC*) : One test case = One Branch Coverage flow
 
     # The total test coverage for TS1 is:
     # (Tested Branch / Total Branch) * 100 = 14 / 14 * 100 = 100% Branch Coverage
@@ -40,7 +40,8 @@ class Test_memoization_branch_cov:
         assert memoization.memoize(varMemoizeValue(self.varReturnValue), 100, 1000) == 1
 
     @pytest.mark.it('Test Should Failed - Their is no expiry of old value, so it should failed. '
-                    'It will cover remaining branch coverage of Line 59 conditions (if-elif- (else)).'
+                    'It will cover remaining branch coverage of Line 59 (if - False condition) '
+                    'as well as Line 59 Conditions (if-elif- (else)).'
                     'Parameters: (2, 100, 1000)')
     def test_TS1_TC2(self):
         self.varReturnValue = 2
@@ -62,7 +63,7 @@ class Test_memoization_branch_cov:
             assert memoization.memoize(varMemoizeValue(self.varReturnValue), (100, 101), 1000) == 2
 
     @pytest.mark.it('Test Should Passed - Ensure to cover the branch when resolver is None. '
-                    'It will cover remaining branch of Line 26 (False condition), Line 35 (if), Line 39 (if).'
+                    'It will cover remaining branch of Line 26 (if - False condition), Line 35 (if), Line 39 (if).'
                     'Parameters: (11, None, 1000)')
     def test_TS1_TC4(self):
         self.varReturnValue = 11
@@ -72,7 +73,8 @@ class Test_memoization_branch_cov:
 
     @pytest.mark.it('Test Should Passed - Although, their is no expiry of old value, but without resolver key,'
                     'the value will just be added in the List. '
-                    'It will cover remaining branch of Line 39 conditions (if-elif- (else)).'
+                    'It will cover remaining branch of Line 39 (if - False condition) '
+                    'as well as Line 39 Conditions (if-elif- (else)).'
                     'Parameters: (11, None, 1000)')
     def test_TS1_TC5(self):
         self.varReturnValue = 11

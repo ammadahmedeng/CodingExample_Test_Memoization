@@ -35,7 +35,7 @@ def memoize(varMemoizeValue, varResolver, intTimeout: int):
     if varResolver is None:
         # If their is no memoize value in list then memoize value is stored in list
         # as well as TTL for memoize value is stored in lstTimeout_lstMemoize dict
-        # with the Key of memoize value
+        # with the Key as memoize value
         if varMemoizeValue not in lstMemoize:
             lstMemoize.append(varMemoizeValue)
             lstTimeout_lstMemoize[varMemoizeValue] = ttlMemoizeValue
@@ -59,7 +59,7 @@ def memoize(varMemoizeValue, varResolver, intTimeout: int):
         if varResolver not in dictMemoize.keys():
             dictMemoize[varResolver] = varMemoizeValue
             dictTimeout_dictMemoize[varResolver] = ttlMemoizeValue
-            
+
         # If memoize value is in the dictionary and current date time is now greater than
         # timeout of memoize value, the old memoize value and timeout are deleted
         # and new memoize value and timeout are saved
