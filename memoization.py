@@ -1,72 +1,45 @@
-import datetime
-
-# (ttl - Time to Live) and (dt - Date Time)
-
-# Dictionary for adding resolver keys and memoize value when resolver is pass
-# Dictionary timeout for calculating and deleting memoize value when time is exceeded
-dictMemoize = {}
-dictTimeout_dictMemoize = {}
-
-# List for adding memoize value when resolver is not pass hence (None)
-# List timeout for calculating and deleting memoize value when time is exceeded
-lstMemoize = []
-lstTimeout_lstMemoize = {}
+import time
 
 
-# Return resolver key for memoization value
-def resolver(varResolver):
-    if type(varResolver) is tuple:
-        return varResolver[0]
-    else:
-        return varResolver
+def memoize(func, resolver, timeout):
+    memoize_func_results = {}
+
+    def func_wrapper(*args):
+        # If resolver is provided, else first argument of the called function i.e. (timeResults)
+        if resolver is not None:
+            key = resolver(*args)
+        else:
+            key = args[0]
+
+        if key in memoize_func_results.keys():
+            if ((time.time() - memoize_func_results[key][1]) * 1000) > timeout:
+                # Timeout occur, delete old value and call original function to cache and return results
+                del memoize_func_results[key]
+                memoize_func_value = memoize_func_results[key] = func(*args), time.time()
+            else:
+                memoize_func_value = memoize_func_results[key]
+
+        # New key provided, hence called function again, cached value and return value via (memoize_func_value) variable
+        else:
+            memoize_func_value = memoize_func_results[key] = func(*args), time.time()
+
+        return memoize_func_value[0]
+
+    return func_wrapper
 
 
-def memoize(varMemoizeValue, varResolver, intTimeout: int):
-    # Get resolver key even when multiple arguments are given, only doesn't get called when it is (None)
-    if varResolver is not None:
-        varResolver = resolver(varResolver)
+def timeResults(day, month):
+    return time.time() + day + month
 
-    # dtCurrent = Get current time
-    # ttlMemoizeValue = Current Time + Timeout Time (offset) -> for deleting memoize value in dict or list
-    dtCurrent = datetime.datetime.now()
-    ttlMemoizeValue = dtCurrent + datetime.timedelta(milliseconds=intTimeout)
 
-    # If resolver key is None than memoize value is stored in list
-    if varResolver is None:
-        # If their is no memoize value in list then memoize value is stored in list
-        # as well as TTL for memoize value is stored in lstTimeout_lstMemoize dict
-        # with the Key as memoize value
-        if varMemoizeValue not in lstMemoize:
-            lstMemoize.append(varMemoizeValue)
-            lstTimeout_lstMemoize[varMemoizeValue] = ttlMemoizeValue
+memoized = memoize(timeResults, lambda day, month: day + month, 1000)
 
-        # If memoize value is in the list and current date time is now greater than
-        # timeout of memoize value, the old memoize value and timeout are deleted
-        # and new memoize value and timeout are saved
-        elif dtCurrent > lstTimeout_lstMemoize[varMemoizeValue]:
-            lstMemoize.remove(varMemoizeValue)
-            del lstTimeout_lstMemoize[varMemoizeValue]
-            lstMemoize.append(varMemoizeValue)
-            lstTimeout_lstMemoize[varMemoizeValue] = ttlMemoizeValue
+results = memoized(2, 2)
+print(results)  # 1611271663.9391403 # First Result
 
-        return varMemoizeValue
+results = memoized(2, 2)
+print(results)  # 1611271663.9391403 # Cached Results
 
-    # If resolver key is provided than memoize value is stored in dictionary
-    else:
-        # If their is no memoize value in dictionary then memoize value is stored in dictionary
-        # as well as TTL for memoize value is stored in dictTimeout_dictMemoize
-        # with the Key as resolver key
-        if varResolver not in dictMemoize.keys():
-            dictMemoize[varResolver] = varMemoizeValue
-            dictTimeout_dictMemoize[varResolver] = ttlMemoizeValue
-
-        # If memoize value is in the dictionary and current date time is now greater than
-        # timeout of memoize value, the old memoize value and timeout are deleted
-        # and new memoize value and timeout are saved
-        elif dtCurrent > dictTimeout_dictMemoize[varResolver]:
-            del dictMemoize[varResolver]
-            del dictTimeout_dictMemoize[varResolver]
-            dictMemoize[varResolver] = varMemoizeValue
-            dictTimeout_dictMemoize[varResolver] = ttlMemoizeValue
-
-        return dictMemoize[varResolver]
+time.sleep(1.1)
+results = memoized(2, 2)
+print(results)  # 1611271665.0522864 # Timeout, so function called, new results
