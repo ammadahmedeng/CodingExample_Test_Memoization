@@ -1,63 +1,45 @@
-# Create fake timer for threading mocking in testing
-import time
-
+# Create fake timer for threading timer mocking in test.py
 from resettabletimer import FakeTimer
 
 
+# FakeTimer object initialization for testing timeout to be used via test.py
 timeout_results_FakeTimer = None
 
 def memoize(func, resolver, timeout):
+    # Memoize results with assigned Key
     memoize_func_results = {}
 
+    # Multithreading with timeout to delete memoized results when timeout occurs
     def timeout_memoize_results():
+        # Storing FakeTimer object in variable for faking timeout in test.py
         global timeout_results_FakeTimer
-        print("Hera")
+
+        # Delete memoized results after timeout and start of creation of object
         memoize_func_results.clear()
+
+        # Timeout calling recursively until main program is terminated or object is created again
         timeout_results_FakeTimer = FakeTimer(timeout / 1000, timeout_memoize_results)
         timeout_results_FakeTimer.start()
 
+    # Starting thread at the start of initialization of object
     timeout_memoize_results()
 
     def func_wrapper(*args):
-        # If resolver is provided, else first argument of the called function i.e. (timeResults)
+        # If resolver is provided, else first argument of the memoized results function
         if resolver is not None:
             key = resolver(*args)
         else:
             key = args[0]
 
+        # If key already exist then return the memoize results
         if key in memoize_func_results.keys():
             memoize_func_value = memoize_func_results[key]
 
-        # New key provided, hence called function again, cached value and return value via (memoize_func_value)
-        # variable
+        # New key provided or memoized values timeout, hence call memoized results function again,
+        # cached value and return value via (memoize_func_value) variable
         else:
             memoize_func_value = memoize_func_results[key] = func(*args)
 
         return memoize_func_value
 
     return func_wrapper
-
-def timeResults(day, month):
-    return time.time() + day + month
-
-memoized = memoize(timeResults, lambda day, month: day + month, 5000)
-
-results = memoized(2, 2)
-print(results)  # 1611271663.9391403 # First Result
-
-results = memoized(2, 2)
-print(results)  # 1611271663.9391403 # Cached Results
-
-time.sleep(10)
-timeout_results_FakeTimer.pass_time(5.1)
-results = memoized(2, 2)
-print(results)  # 1611271663.9391403 # Cached Results
-results = memoized(2, 2)
-print(results)  # 1611271663.9391403 # Cached Results
-time.sleep(10)
-results = memoized(2, 2)
-print(results)  # 1611271663.9391403 # Cached Results
-timeout_results_FakeTimer.pass_time(5.1)
-results = memoized(2, 2)
-print(results)  # 1611271663.9391403 # Cached Results
-

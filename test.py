@@ -1,12 +1,8 @@
 import os
 
-# Faking timeout for the expiration of memoized stored value
-import datetime
-from freezegun import freeze_time
-
 import pytest
 
-import memoization
+from memoization import memoize, timeout_results_FakeTimer
 
 # Global function for memoize value which is called through each test cases and test coverage
 # Postional Argument (memoizeValue) with lambda anonymous function
