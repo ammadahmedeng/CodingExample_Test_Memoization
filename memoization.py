@@ -25,7 +25,7 @@ def memoize(func, resolver, timeout):
     timeout_memoize_results()
 
     def func_wrapper(*args):
-        # If resolver is provided, else first argument of the memoized results function
+        # If resolver is provided, else first argument of the memoized results function.
         if resolver is not None:
             key = resolver(*args)
         else:
