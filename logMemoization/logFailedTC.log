@@ -1,8 +1,0 @@
-============================= test session starts =============================
-platform win32 -- Python 3.8.0, pytest-6.2.1, py-1.10.0, pluggy-0.13.1 -- C:\Users\ammad\Desktop\CodingExample_Test_Memoization\venv\Scripts\python.exe
-cachedir: .pytest_cache
-rootdir: C:\Users\ammad\Desktop\CodingExample_Test_Memoization
-plugins: describe-it-0.1.0
-collecting ... collected 1 item
-
-test.py::Test_memoization::test_TS1_TC1[[ memoization — Should failed in attempt of doing memoize due to missing function ]] FAILED
