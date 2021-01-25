@@ -5,7 +5,6 @@ import pytest
 import memoization
 
 
-'''
 # memoization-branch-coverage class for controlling memoize Test Plan (TP)
 @pytest.mark.describe('memoization-branch-coverage')
 class Test_memoization_branch_cov:
@@ -104,7 +103,7 @@ class Test_memoization_branch_cov:
 
         # Should returned new value to be memoized as their is timeout, hence failing with old value check
         assert memoized(args1, args2, args3) == 30
-'''
+
 
 # memoization-data-coverage class for controlling memoize Test Plan (TP)
 @pytest.mark.describe('memoization-data-coverage')
@@ -152,7 +151,7 @@ class Test_memoization_data_cov:
 
     @pytest.mark.it('Checking invalid data types (mutable types) for dictionary keys. '
                     'Should passed as retuned is exception (None) object instead of returnValue i.e. (50).'
-                    'Mutable Type 1: Set, Mutable Type 1: List, Mutable Type 1: Dictionary')
+                    'Mutable Type 1: Set, Mutable Type 2: List, Mutable Type 3: Dictionary')
     def test_TS2_TC2(self):
         returnValue = 50
 
@@ -162,13 +161,13 @@ class Test_memoization_data_cov:
         # Setting up callback function
         memoized = memoization.memoize(testFunction, lambda key: key, 1000)
 
-        # Assertion for checking set invalid type (key), should passed
+        # Assertion for checking set invalid type (key), should passed as exception (None) object is returned
         assert memoized({1, "Set2"}) is None
 
-        # Assertion for checking list invalid type (key), should passed
-        assert memoized([1, "List1"]) is None
+        # Assertion for checking list invalid type (key), should passed as exception (None) object is returned
+        assert memoized([1, "List2"]) is None
 
-        # Assertion for checking dictionary invalid type (key), should passed
+        # Assertion for checking dictionary invalid type (key), should passed as exception (None) object is returned
         assert memoized({"Dict1": 1, 1: "Dict2"}) is None
 
 

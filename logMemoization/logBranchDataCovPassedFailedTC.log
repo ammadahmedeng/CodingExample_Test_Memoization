@@ -1,0 +1,84 @@
+============================= test session starts =============================
+platform win32 -- Python 3.8.0, pytest-6.2.1, py-1.10.0, pluggy-0.13.1 -- C:\Users\ammad\Desktop\CodingExample_Test_Memoization\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\ammad\Desktop\CodingExample_Test_Memoization
+plugins: describe-it-0.1.0
+collecting ... collected 6 items
+
+test.py::Test_memoization_branch_cov::test_TS1_TC1[[ memoization-branch-coverage — Checking memoized function for testing memoized values. ]] PASSED
+test.py::Test_memoization_branch_cov::test_TS1_TC2[[ memoization-branch-coverage — This test will be failed as the timeout occur, hence, memoized value will timeout and function will be called again to return new value. ]] FAILED
+test.py::Test_memoization_branch_cov::test_TS1_TC3[[ memoization-branch-coverage — When resolver is not provided, the first argument should be memoized values key. ]] PASSED
+test.py::Test_memoization_branch_cov::test_TS1_TC4[[ memoization-branch-coverage — The test will failed as the timeout occur, hence, new memoized value will be returned. The first argument as memoized key because resolver is not provided. ]] FAILED
+test.py::Test_memoization_data_cov::test_TS2_TC1[[ memoization-data-coverage — Checking valid data types (immutable types) for dictionary keys. Should passed. bool, bytes, int, float, complex, string, tuples, range ]] PASSED
+test.py::Test_memoization_data_cov::test_TS2_TC2[[ memoization-data-coverage — Checking invalid data types (mutable types) for dictionary keys. Should passed as retuned is exception (None) object instead of returnValue i.e. (50).Mutable Type 1: Set, Mutable Type 2: List, Mutable Type 3: Dictionary ]] Invalid or empty values were give for the key, please enter correct values to be processed,
+Invalid or empty values were give for the key, please enter correct values to be processed,
+Invalid or empty values were give for the key, please enter correct values to be processed,
+PASSED
+
+================================== FAILURES ===================================
+_ Test_memoization_branch_cov.test_TS1_TC2[[ memoization-branch-coverage — This test will be failed as the timeout occur, hence, memoized value will timeout and function will be called again to return new value. ]] _
+
+self = <test.Test_memoization_branch_cov object at 0x000001E5C036D700>
+
+    @pytest.mark.it('This test will be failed as the timeout occur, hence, memoized value will timeout '
+                    'and function will be called again to return new value.')
+    def test_TS1_TC2(self):
+        returnValue = 45
+    
+        # Function, which return value should be memoized
+        testFunction = lambda key: returnValue
+    
+        # Setting up callback function
+        memoized = memoization.memoize(testFunction, lambda key: key, 5000)
+    
+        # Assertion for checking return value via callback to be memoized, it should passed
+        assert memoized("e1-51-01-efg") == 45
+    
+        returnValue = 55
+    
+        memoization.timeout_results_FakeTimer.pass_time(5)
+    
+        # Should returned new value to be memoized as their is timeout, hence failing with old value check
+>       assert memoized("e1-51-01-efg") == 45
+E       assert 55 == 45
+E         +55
+E         -45
+
+test.py:58: AssertionError
+_ Test_memoization_branch_cov.test_TS1_TC4[[ memoization-branch-coverage — The test will failed as the timeout occur, hence, new memoized value will be returned. The first argument as memoized key because resolver is not provided. ]] _
+
+self = <test.Test_memoization_branch_cov object at 0x000001E5C036D550>
+
+    @pytest.mark.it('The test will failed as the timeout occur, hence, new memoized value will be returned. '
+                    'The first argument as memoized key because resolver is not provided.')
+    def test_TS1_TC4(self):
+        args1 = 5
+        args2 = 10
+        args3 = 15
+    
+        # Function, which return value should be memoized
+        testFunction = lambda args1, arg2, arg3: args1 + arg2 + arg3
+    
+        # Setting up callback function
+        memoized = memoization.memoize(testFunction, None, 5000)
+    
+        # Assertion for checking return value via callback to be memoized, it should passed
+        assert memoized(args1, args2, args3) == 30
+    
+        args1 = 5
+        args2 = 20
+        args3 = 30
+    
+        memoization.timeout_results_FakeTimer.pass_time(5)
+    
+        # Should returned new value to be memoized as their is timeout, hence failing with old value check
+>       assert memoized(args1, args2, args3) == 30
+E       assert 55 == 30
+E         +55
+E         -30
+
+test.py:105: AssertionError
+=========================== short test summary info ===========================
+FAILED test.py::Test_memoization_branch_cov::test_TS1_TC2[[ memoization-branch-coverage — This test will be failed as the timeout occur, hence, memoized value will timeout and function will be called again to return new value. ]]
+FAILED test.py::Test_memoization_branch_cov::test_TS1_TC4[[ memoization-branch-coverage — The test will failed as the timeout occur, hence, new memoized value will be returned. The first argument as memoized key because resolver is not provided. ]]
+========================= 2 failed, 4 passed in 0.13s =========================

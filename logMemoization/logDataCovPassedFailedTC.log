@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.8.0, pytest-6.2.1, py-1.10.0, pluggy-0.13.1 -- C:\Users\ammad\Desktop\CodingExample_Test_Memoization\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\ammad\Desktop\CodingExample_Test_Memoization
+plugins: describe-it-0.1.0
+collecting ... collected 2 items
+
+test.py::Test_memoization_data_cov::test_TS2_TC1[[ memoization-data-coverage — Checking valid data types (immutable types) for dictionary keys. Should passed. bool, bytes, int, float, complex, string, tuples, range ]] PASSED
+test.py::Test_memoization_data_cov::test_TS2_TC2[[ memoization-data-coverage — Checking invalid data types (mutable types) for dictionary keys. Should passed as retuned is exception (None) object instead of returnValue i.e. (50).Mutable Type 1: Set, Mutable Type 2: List, Mutable Type 3: Dictionary ]] Invalid or empty values were give for the key, please enter correct values to be processed,
+Invalid or empty values were give for the key, please enter correct values to be processed,
+Invalid or empty values were give for the key, please enter correct values to be processed,
+PASSED
+
+============================== 2 passed in 0.10s ==============================
