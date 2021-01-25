@@ -28,17 +28,23 @@ def memoize(func, resolver, timeout):
         # If resolver is provided, else first argument of the memoized results function.
         if resolver is not None:
             key = resolver(*args)
+            print(key)
         else:
             key = args[0]
 
-        # If key already exist then return the memoize results
-        if key in memoize_func_results.keys():
-            memoize_func_value = memoize_func_results[key]
+        try:
+            # If key already exist then return the memoize results
+            if key in memoize_func_results.keys():
+                memoize_func_value = memoize_func_results[key]
 
-        # New key provided or memoized values timeout, hence call memoized results function again,
-        # cached value and return value via (memoize_func_value) variable
-        else:
-            memoize_func_value = memoize_func_results[key] = func(*args)
+            # New key provided or memoized values timeout, hence call memoized results function again,
+            # cached value and return value via (memoize_func_value) variable
+            else:
+                memoize_func_value = memoize_func_results[key] = func(*args)
+
+        except (ValueError, TypeError):
+            print("Invalid values entered for the key, please enter correct values to be processed")
+            return None
 
         return memoize_func_value
 
